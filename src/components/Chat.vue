@@ -1,24 +1,31 @@
 <template>
     <div>
         <div class="messages-wrapper">
-            <ul>
+            <h3 v-if="!initialized">Initializing the chat.</h3>
+            <p v-if="error">{{ error }}</p>
+            <ul v-else>
                 <li v-for="(message, index) in messages" :key="index"> {{message}} </li>
             </ul>
         </div>
-        <p>Your message goes here</p>
-        <div class="input-wrapper">
-            <input type="text" class="message-text" v-model="newMessage" @keypress.enter="sendMessage">
-            <button class="new-message" @click="sendMessage">Send Message</button>
+        <div v-if="initialized">
+            <p>Your message goes here</p>
+            <div class="input-wrapper">
+                <input type="text" class="message-text" v-model="newMessage" @keypress.enter="sendMessage">
+                <button class="new-message" @click="sendMessage">Send Message</button>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+import { CometChat } from '@cometchat-pro/chat/CometChat.js'
     export default {
         data() {
             return {
                 newMessage: '',
-                messages: []
+                messages: [],
+                initialized: false,
+                error: null,
             };
         },
         methods: {
@@ -26,6 +33,14 @@
                 this.messages.push(this.newMessage)
                 this.newMessage = ''
             }
+        },
+        created() {
+            var appID = "c66c8f9d68f0e14441281e151eb412944c934efc";
+
+            CometChat.init(appID).then(
+            () => this.initialized = true,
+            error => this.error = error
+            );
         }
     }
 </script>
