@@ -3,8 +3,14 @@
         <div class="messages-wrapper">
             <h3 v-if="!initialized">Initializing the chat.</h3>
             <p v-if="error">{{ error }}</p>
-            <ul v-else>
-                <li v-for="(message, index) in messages" :key="index"> {{message}} </li>
+            <ul>
+                <li
+                    v-for="(message, index) in messages"
+                    :key="index"
+                    :class="isMine(message) ? 'right' : 'left'"
+                >
+                {{message.text}}
+                </li>
             </ul>
         </div>
         <div v-if="initialized">
@@ -33,24 +39,41 @@ import { CometChat } from '@cometchat-pro/chat/CometChat.js'
                 initialized: false,
                 error: null,
                 user: null,
+                groupGUID: 'vuegroupchat'
             };
         },
         methods: {
             sendMessage() {
-                this.messages.push(this.newMessage)
+                let messageText = this.newMessage
+                let messageType = CometChat.MESSAGE_TYPE.TEXT
+                let receiverType = CometChat.RECEIVER_TYPE.GROUP
+
+                let textMessage = new CometChat.TextMessage(this.groupGUID, messageText, messageType, receiverType);
+
+                CometChat.sendMessage(textMessage);
                 this.newMessage = ''
+            },
+            setUserAndListener(user) {
+                this.user = user
+                let listenerID = "UNIQUE_LISTENER_ID";
+                CometChat.addMessageListener(listenerID, new CometChat.MessageListener({
+                onTextMessageReceived: message => this.messages.push(message)
+                }));
+            },
+            isMine(message) {
+                return message.sender.uid === this.username
             }
         },
         created() {
-            var appID = "180d927c69c56";
-            var apiKey = "c66c8f9d68f0e14441281e151eb412944c934efc";
+            let appID = "180d927c69c56";
+            let apiKey = "c66c8f9d68f0e14441281e151eb412944c934efc";
             CometChat.init(appID)
                 .then(
                 () => {
                     this.initialized = true
                     CometChat.login(this.username, apiKey)
                         .then(
-                            user => this.user = user,
+                            user => this.setUserAndListener(user),
                             error => this.error = error
                         );
                 },
@@ -70,16 +93,20 @@ import { CometChat } from '@cometchat-pro/chat/CometChat.js'
 }
 .messages-wrapper ul {
     list-style: none;
+    padding: 0px 0px;
 }
 .messages-wrapper ul li {
-    padding: 20px 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-bottom: 20px;
+    font-weight: bold;
 }
-.messages-wrapper ul li .left{
-    text-align: left;
+.left{
+    text-align: left !important;
 }
 
-.messages-wrapper ul li .right{
-    text-align: right;
+.right{
+    text-align: right !important;
 }
 .input-wrapper {
     width: 800px;
