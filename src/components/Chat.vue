@@ -20,12 +20,19 @@
 <script>
 import { CometChat } from '@cometchat-pro/chat/CometChat.js'
     export default {
+        props: {
+            username: {
+                type: String,
+                required: true,
+            }
+        },
         data() {
             return {
                 newMessage: '',
                 messages: [],
                 initialized: false,
                 error: null,
+                user: null,
             };
         },
         methods: {
@@ -35,12 +42,20 @@ import { CometChat } from '@cometchat-pro/chat/CometChat.js'
             }
         },
         created() {
-            var appID = "c66c8f9d68f0e14441281e151eb412944c934efc";
-
-            CometChat.init(appID).then(
-            () => this.initialized = true,
-            error => this.error = error
-            );
+            var appID = "180d927c69c56";
+            var apiKey = "c66c8f9d68f0e14441281e151eb412944c934efc";
+            CometChat.init(appID)
+                .then(
+                () => {
+                    this.initialized = true
+                    CometChat.login(this.username, apiKey)
+                        .then(
+                            user => this.user = user,
+                            error => this.error = error
+                        );
+                },
+                error => this.error = error
+                );
         }
     }
 </script>
