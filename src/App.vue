@@ -3,7 +3,7 @@
     <div v-if="!showChat">
       <p>Username</p>
       <br>
-      <input type="text" v-model="username" />
+      <input type="text" v-model="username" @keypress.enter="showChat = true" />
       <button @click.prevent="showChat = true">Join Chat</button>
     </div>
     <Chat v-if="showChat" />
