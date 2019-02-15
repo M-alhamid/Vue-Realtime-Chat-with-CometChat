@@ -56,6 +56,7 @@ import { CometChat } from '@cometchat-pro/chat/CometChat.js'
             setUserAndListener(user) {
                 this.user = user
                 let listenerID = "UNIQUE_LISTENER_ID";
+                CometChat.joinGroup(this.groupGUID, CometChat.GROUP_TYPE.PUBLIC, '');
                 CometChat.addMessageListener(listenerID, new CometChat.MessageListener({
                 onTextMessageReceived: message => this.messages.push(message)
                 }));
