@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <div v-if="!showChat">
+      <p>Demo users: superhero1, superhero2. use only these 2 for demo purposes.</p>
       <p>Username</p>
       <br>
       <input type="text" v-model="username" @keypress.enter="showChat = true" />
