@@ -1,5 +1,8 @@
 # cometchatappdev
 
+## Demo
+https://spinning-avatar.firebaseapp.com/index.html
+
 ## Project setup
 ```
 npm install
