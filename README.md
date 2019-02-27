@@ -18,8 +18,8 @@ To run the demo follow these steps:
 4. Go to the **API Keys** tab and click **Create API Key**
 5. Create an API key called "VueJs Group Chat Key" with **Full Access**
 4. Download the repository [here](https://github.com/bookercodes/kotlin-group-chat/archive/master.zip) or by running `git clone https://github.com/arthlimchiu/CometChatPro-Tutorial.git` and open it in Visual Studio Code
-5. Update [strings.xml](https://github.com/bookercodes/kotlin-group-chat/blob/master/src/config.js) with your newly-created `appID` and `apiKey`
-6. Run the app and login with one of the test users: superhero1, superhero2, superhero3, superhero4 or superhero5
+5. Update [config.js](https://github.com/bookercodes/kotlin-group-chat/blob/master/src/config.js) with your newly-created `appID` and `apiKey`
+6. `npm run serve` to run the app and login with one of the test users: superhero1, superhero2, superhero3, superhero4 or superhero5
 
 Questions about running the demo? [Open an issue](https://github.com/bookercodes/kotlin-group-chat/issues). We're here to help ✌️
 
