@@ -25,6 +25,7 @@
 
 <script>
 import { CometChat } from '@cometchat-pro/chat/CometChat.js'
+import { appID, apiKey } from '../config';
     export default {
         props: {
             username: {
@@ -66,8 +67,6 @@ import { CometChat } from '@cometchat-pro/chat/CometChat.js'
             }
         },
         created() {
-            let appID = "180d927c69c56";
-            let apiKey = "c66c8f9d68f0e14441281e151eb412944c934efc";
             CometChat.init(appID)
                 .then(
                 () => {
